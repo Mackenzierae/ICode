@@ -12,7 +12,7 @@ app.controller('mainController', ["$scope", "mainFactory", "$location", function
       console.log("CLOSED data:", data);
       console.log("&&&&&&&&&&&&&&&&&&&&&&&&&")
       for (var i = 0; i < data.length; i++){
-        console.log(data[i].closed_at);
+        // console.log(data[i].closed_at);
         var dateObject = new Date(data[i].closed_at)
 
         var year = 1900 + dateObject.getYear();
@@ -43,8 +43,6 @@ app.controller('mainController', ["$scope", "mainFactory", "$location", function
       // console.log("&&&&&&&&&&&&&&&&&&&&&&&&&")
     })
   }
-
-
 
   getClosedBugsData();
   getOpenBugsData();

@@ -5,21 +5,18 @@
     <title>pR2</title>
     <script type="text/javascript" src='bower_components/angular/angular.js'></script>
     <script type="text/javascript" src='bower_components/angular-route/angular-route.js'></script>
-    <!-- <script src="./node_modules/chart.js/Chart.min.js"></script> -->
-    <!-- these locations are probs wrong -->
-    <!-- <script src="./node_modules/angular-chart.js/dist/angular-chart.min.js"></script> -->
 
     <link rel="stylesheet" href="static/css/styles.css" media="screen" title="no title">
-    <script type="text/javascript" src = "assets/app.js"></script>
-
+    <script type="text/javascript">
+      var app = angular.module('app', ['ngRoute']);
+    </script>
     <script type="text/javascript" src = "controllers/mainController.js"></script>
-
     <script type="text/javascript" src = "factories/mainFactory.js"></script>
-
   </head>
   <body>
-    <h2>Let's get some data rollin'</h2><br>
-    <div ng-view="">
+    <div ng-controller="mainController">
+      <h1>Data:</h1>
+
 
     </div>
 
