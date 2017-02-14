@@ -37,14 +37,15 @@ app.factory('mainFactory', ['$http', '$location', function($http, $location){
   };
 
 
-  //Call for OPEN BUGG ISSUES
+
+
+  //Call for ALL OPEN BUGG ISSUES
   factory.getOpenBugsData = function(callback){
       $http({
         method: "get",
         url: "https://api.github.com/repos/babel/babel/issues?labels=bug&state=open&per_page=100&page="+ openNumber,
     })
     .then(function(res){
-      console.log("in the response of the getData factory function OPNENNNNNNNNNN:", res.data.length);
       ////////////////////////////////////////
       ////dealing with Pagination:
       ////////////////////////////////////////

@@ -1,10 +1,10 @@
 console.log("main controller");
-app.controller('mainController', ["$scope", "mainFactory", "$location", function($scope, mainFactory, $location){
+app.controller('mainController', ["$scope", "mainFactory", function($scope, mainFactory){
 
   $scope.test = "main controller testingggg";
 
   var closedData = {};
-  var Open = {};
+  var openData = {};
 
   //Easily change how many weeks we want to look at by changing the varible 'weeksBackWeWantToLookAt'
   //If we go past 52 we'd have to break down by year which the code doesn't currently support.
@@ -21,7 +21,7 @@ app.controller('mainController', ["$scope", "mainFactory", "$location", function
 //FUNCTION TO GET DATA ABOUT CLOSED BUGG ISSUES:
   var getClosedBugsData = function(){
     mainFactory.getClosedBugsData(closedSinceBlankWeeksAgoParam, function(data){
-      console.log("ALL BUG ISSUES CLOSED WITHIN THE PAST " + weeksBackWeWantToLookAt + " WEEKS.....:", data);
+      console.log("ALL BUG ISSUES CLOSED WITHIN THE PAST " + weeksBackWeWantToLookAt + " WEEKS.....:", data.length, data);
 
       for (var i = 0; i < data.length; i++){
         var date = data[i].closed_at;
@@ -40,12 +40,29 @@ app.controller('mainController', ["$scope", "mainFactory", "$location", function
 
 
 
+//FUNCTION TO GET ALL DATA ABOUT OPEN BUGG ISSUES:
   var getOpenBugsData = function(){
-    console.log(" get some data function in controller");
     mainFactory.getOpenBugsData(function(data){
-      // console.log("OPEN data:", data);
-      // console.log("&&&&&&&&&&&&&&&&&&&&&&&&&")
+      console.log("DATA FOR ALL BUGS THAT ARE OPEN.......", data.length, data);
+      for (var i = 0; i < data.length; i++){
+        var date = data[i].created_at;
+        var week = moment(date).week();
+        var year = moment(date).year();
+        if (openData[year]) {
+            if (openData[year][week]) {
+              openData[year][week].push(data[i]);
+            }
+            else {
+              openData[year][week] = [data[i]];
+              }
+            }
+        else {
+          openData[year] = {};
+          openData[year][week] = [data[i]];
+        }
+      }
     })
+    console.log("ALL OPEN BUG ISSUES BROKEN DOWN WEEK BY WEEK......:", openData);
   }
 
   getClosedBugsData();
