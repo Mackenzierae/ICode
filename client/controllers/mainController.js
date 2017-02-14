@@ -24,6 +24,15 @@ app.controller('mainController', ["$scope", "mainFactory", function($scope, main
       console.log("ALL BUG ISSUES CLOSED WITHIN THE PAST " + weeksBackWeWantToLookAt + " WEEKS.....:", data.length, data);
 
       for (var i = 0; i < data.length; i++){
+        ///////...Average time to close bugs...//////////////
+              // var createdAt = Date.parse(data[i].created_at);
+              // var closedAt = Date.parse(data[i].closed_at);
+              // var difference = closedAt - createdAt;
+              // var oneDay = 86400;
+              // var oneHour = 3600;
+              // var days = (difference / 1000) / oneDay;
+              // // closedData[week].push(data[i], "number of days from create to close..." + days);
+        //////////////////////////////////////////////////
         var date = data[i].closed_at;
         var week = moment(date).week();
           if (closedData[week]) {
