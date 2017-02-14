@@ -8,15 +8,12 @@ app.factory('mainFactory', ['$http', '$location', function($http, $location){
   var openNumber = 1;
 
   //Call for CLOSED BUGG ISSUES
-  factory.getClosedBugsData = function(callback){
-      //function(pagenumber, callback);
+  factory.getClosedBugsData = function(sinceParam, callback){
       $http({
         method: "get",
-        url: "https://api.github.com/repos/babel/babel/issues?labels=bug&state=closed&per_page=100&page="+ closedNumber,
+        url: "https://api.github.com/repos/babel/babel/issues?labels=bug&state=closed&per_page=100&page="+ closedNumber + "&since="+ sinceParam,
     })
     .then(function(res){
-      console.log("res of closed bugggggzzzzzzzzz: length = ", res.data.length);
-      // console.log("res.headers???:", res.headers('link'));
       ////////////////////////////////////////
       ////dealing with Pagination:
       ////////////////////////////////////////
