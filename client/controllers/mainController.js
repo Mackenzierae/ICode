@@ -12,7 +12,7 @@ app.controller('mainController', ["$scope", "mainFactory", function($scope, main
       console.log(data.length, data);
 
       for (var i = 0; i < data.length; i++){
-        //Grouping closed bug data weekly by closed_at date
+        //...Grouping closed bug data weekly by closed_at date
         if (data[i].state == 'closed'){
           closedCount++;
           var date = data[i].closed_at;
@@ -22,7 +22,7 @@ app.controller('mainController', ["$scope", "mainFactory", function($scope, main
           closedData[year][week] = closedData[year][week] || [];
           closedData[year][week].push(data[i]);
         }
-        //Grouping open bug data weekly by created_at date
+        //...Grouping open bug data weekly by created_at date
         else if (data[i].state == 'open'){
           openCount++;
           var date = data[i].created_at;
