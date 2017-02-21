@@ -7,7 +7,6 @@ app.factory('mainFactory', ['$http', '$location', function($http, $location){
     var pageNumber = 1
 
     function getPage() {
-      // do stuff, update data, recurse on getPage
       $http({
         method: "get",
         url: "https://api.github.com/repos/babel/babel/issues?labels=bug&state=all&per_page=100&page="+ pageNumber,
