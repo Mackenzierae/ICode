@@ -20,23 +20,23 @@ app.controller('mainController', ["$scope", "mainFactory", function($scope, main
       console.log(data.length, data);
 
       for (var i = 0; i < data.length; i++){
-
-        var date = data[i].created_at;
-        var week = moment(date).week();
-        var year = moment(date).year();
-
         if (data[i].state == 'closed'){
-          closedData[year] = closedData[year] || [];
+          var date = data[i].closed_at;
+          var week = moment(date).week();
+          var year = moment(date).year();
+          closedData[year] = closedData[year] || {};
           closedData[year][week] = closedData[year][week] || [];
           closedData[year][week].push(data[i]);
         }
         else if (data[i].state == 'open'){
-          openData[year] = openData[year] || [];
+          var date = data[i].created_at;
+          var week = moment(date).week();
+          var year = moment(date).year();
+          openData[year] = openData[year] || {};
           openData[year][week] = openData[year][week] || [];
           openData[year][week].push(data[i]);
         }
   }
-
       console.log("CLOSED DATA.....", closedData);
       console.log("OPEN DATA.....", openData);
       // console.log("RANDOM.....", checkForRandom);
