@@ -1,26 +1,20 @@
 console.log("main controller");
 app.controller('mainController', ["$scope", "mainFactory", function($scope, mainFactory){
 
-  $scope.test = "main controller testingggg";
-
   var closedData = {};
   var openData = {};
-  var checkForRandom = {};
-
-  var weeksBackWeWantToLookAt = 11
-  var millisecondsInOneWeek = 604800000;
-  var currentTimeStamp = new Date();
-  var currentDateUnix = Date.parse(currentTimeStamp);
-  var blankWeeksAgoUnix = new Date(currentDateUnix - (millisecondsInOneWeek * weeksBackWeWantToLookAt))
-  var closedSinceBlankWeeksAgoParam = blankWeeksAgoUnix.toISOString();
 
 //FUNCTION TO GET DATA ABOUT ALL BUGG ISSUES:
   var getBugData = function(){
+    var openCount = 0;
+    var closedCount = 0;
     mainFactory.getBugData(function(data){
       console.log(data.length, data);
 
       for (var i = 0; i < data.length; i++){
+        //Grouping closed bug data weekly by closed_at date
         if (data[i].state == 'closed'){
+          closedCount++;
           var date = data[i].closed_at;
           var week = moment(date).week();
           var year = moment(date).year();
@@ -28,7 +22,9 @@ app.controller('mainController', ["$scope", "mainFactory", function($scope, main
           closedData[year][week] = closedData[year][week] || [];
           closedData[year][week].push(data[i]);
         }
+        //Grouping open bug data weekly by created_at date
         else if (data[i].state == 'open'){
+          openCount++;
           var date = data[i].created_at;
           var week = moment(date).week();
           var year = moment(date).year();
@@ -36,16 +32,24 @@ app.controller('mainController', ["$scope", "mainFactory", function($scope, main
           openData[year][week] = openData[year][week] || [];
           openData[year][week].push(data[i]);
         }
-  }
-      console.log("CLOSED DATA.....", closedData);
-      console.log("OPEN DATA.....", openData);
-      // console.log("RANDOM.....", checkForRandom);
+      }
+
+      console.log("CLOSED DATA grouped weekly by closed date......", closedCount, closedData);
+      console.log("OPEN DATA grouped weekly by created date.....",openCount, openData);
     })
   }
 
 
   getBugData();
 }])
+
+
+// var weeksBackWeWantToLookAt = 11
+// var millisecondsInOneWeek = 604800000;
+// var currentTimeStamp = new Date();
+// var currentDateUnix = Date.parse(currentTimeStamp);
+// var blankWeeksAgoUnix = new Date(currentDateUnix - (millisecondsInOneWeek * weeksBackWeWantToLookAt))
+// var closedSinceBlankWeeksAgoParam = blankWeeksAgoUnix.toISOString();
 
 
 ///////...Average time to close bugs...//////////////
